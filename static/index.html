@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroPulse — Real-Time Airfare Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside id="sidebar">
+    <div class="brand-container" id="sidebar-brand-logo" title="Go to Welcome Entry">
+      <div class="brand-logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.3c.4-.2.6-.6.5-1.1z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>AeroPulse</h1>
+        <p>Airfare Intelligence</p>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li class="nav-item" data-view="view-dashboard">
+        <a href="#dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-index">
+        <a href="#index">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg>
+          <span>Airfare Index</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-routes">
+        <a href="#routes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>
+          <span>Route Analytics</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-comparison">
+        <a href="#comparison">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+          <span>Airline Comparison</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-spikes">
+        <a href="#spikes">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+          <span>Price Spike Alerts</span>
+          <span class="badge-count" id="sidebar-alert-badge">18</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-booking">
+        <a href="#booking">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Booking Window</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-explorer">
+        <a href="#explorer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+          <span>Data Explorer</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-quality">
+        <a href="#quality">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Data Quality</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-methodology">
+        <a href="#methodology">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+          <span>Methodology</span>
+        </a>
+      </li>
+      <li class="nav-item" data-view="view-about">
+        <a href="#about">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>About</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="demo-mode-badge">
+        <div class="demo-mode-dot"></div>
+        <span>DEMO DATA MODE</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Body -->
+  <main id="main-content">
+    <header class="top-header">
+      <div class="header-left">
+        <div class="page-title-area">
+          <h2>AeroPulse Intelligence Workspace</h2>
+          <p>Real-Time Airfare Intelligence • High-Frequency Domestic Index</p>
+        </div>
+      </div>
+
+      <div class="header-stats-ticker">
+        <div class="ticker-item">
+          <span class="ticker-label">Index:</span>
+          <span class="ticker-value" id="header-ticker-index">115.4</span>
+          <span class="ticker-delta delta-up" id="header-ticker-delta">+15.4%</span>
+        </div>
+        <div class="ticker-item">
+          <span class="ticker-label">Avg Fare:</span>
+          <span class="ticker-value" id="header-ticker-avgfare">₹7,955</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-secondary" id="btn-simulate-batch">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          <span>Simulate Batch</span>
+        </button>
+        <button class="btn btn-primary" id="btn-export-csv">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          <span>Export CSV</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 0. WELCOME / ENTRY PAGE -->
+    <section id="view-welcome" class="view-section active">
+      <div class="view-container">
+        <div class="welcome-hero-wrapper">
+          <div class="welcome-hero-grid">
+            <div>
+              <div class="welcome-brand-badge">
+                <span>✈️ Standalone Aviation Intelligence</span>
+              </div>
+              <h1 class="welcome-title">Real-Time Airfare Intelligence</h1>
+              <p class="welcome-subtitle">
+                Track airfare movements, analyse price trends, detect unusual fare changes, and turn flight-price data into actionable insights across India.
+              </p>
+              <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                <button class="btn btn-primary" style="padding: 12px 24px; font-size: 0.95rem;" data-navigate="view-dashboard">
+                  <span>Explore AeroPulse →</span>
+                </button>
+                <button class="btn btn-secondary" style="padding: 12px 20px; font-size: 0.95rem;" data-navigate="view-methodology">
+                  <span>View How It Works</span>
+                </button>
+              </div>
+            </div>
+            <div>
+              <div class="welcome-preview-canvas">
+                <svg id="welcome-map-svg"></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preview KPI Cards on Welcome Screen -->
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-card-highlight">
+            <div class="kpi-top">
+              <span class="kpi-title">Airfare Price Index</span>
+              <div class="kpi-icon">📈</div>
+            </div>
+            <div class="kpi-value" id="wp-kpi-index">115.4</div>
+            <div class="kpi-subtitle">
+              <span class="delta-up">+15.4%</span>
+              <span>vs Base Period (₹6,920)</span>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Weighted Average Fare</span>
+              <div class="kpi-icon">₹</div>
+            </div>
+            <div class="kpi-value" id="wp-kpi-avgfare">₹7,955</div>
+            <div class="kpi-subtitle">Across 26 Domestic Corridors</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Routes Monitored</span>
+              <div class="kpi-icon">🛫</div>
+            </div>
+            <div class="kpi-value" id="wp-kpi-routes">26</div>
+            <div class="kpi-subtitle">Metro & Regional Hubs</div>
+          </div>
+          <div class="kpi-card" style="border-left: 4px solid var(--color-danger);">
+            <div class="kpi-top">
+              <span class="kpi-title">Active Price Alerts</span>
+              <div class="kpi-icon" style="color: #dc2626;">🚨</div>
+            </div>
+            <div class="kpi-value" id="wp-kpi-alerts" style="color: #dc2626;">18</div>
+            <div class="kpi-subtitle">3 High Severity Anomalies</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. DASHBOARD (DATA-FIRST HOME) -->
+    <section id="view-dashboard" class="view-section">
+      <div class="view-container">
+        <!-- Data Freshness Status Bar -->
+        <div class="freshness-bar">
+          <div class="freshness-indicators">
+            <span class="freshness-tag">
+              <div class="demo-mode-dot"></div>
+              <strong>Demo Data Mode</strong>
+            </span>
+            <span>Last Updated: <strong>Just now</strong></span>
+            <span>Coverage: <strong>90 Days</strong></span>
+            <span>Records Available: <strong>11,000+</strong></span>
+          </div>
+          <div>
+            <span class="badge badge-green">ETL Pipeline Operational</span>
+          </div>
+        </div>
+
+        <!-- Top KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card kpi-card-highlight">
+            <div class="kpi-top">
+              <span class="kpi-title">Airfare Price Index</span>
+              <div class="kpi-icon">✈️</div>
+            </div>
+            <div class="kpi-value" id="kpi-airfare-index">115.4</div>
+            <div class="kpi-subtitle" id="kpi-index-change">+15.4% vs Base Period</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Weighted Avg Fare</span>
+              <div class="kpi-icon">₹</div>
+            </div>
+            <div class="kpi-value" id="kpi-avg-fare">₹7,955</div>
+            <div class="kpi-subtitle" id="kpi-base-fare">Base: ₹6,920</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Active Routes</span>
+              <div class="kpi-icon">🛫</div>
+            </div>
+            <div class="kpi-value" id="kpi-routes-count">26</div>
+            <div class="kpi-subtitle">Domestic Corridors</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Airlines Monitored</span>
+              <div class="kpi-icon">✈️</div>
+            </div>
+            <div class="kpi-value" id="kpi-airlines-count">6</div>
+            <div class="kpi-subtitle">Carriers Tracked</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <span class="kpi-title">Observations</span>
+              <div class="kpi-icon">📊</div>
+            </div>
+            <div class="kpi-value" id="kpi-obs-count">11,165</div>
+            <div class="kpi-subtitle">Validated Records</div>
+          </div>
+
+          <div class="kpi-card" style="border-left: 4px solid var(--color-danger);">
+            <div class="kpi-top">
+              <span class="kpi-title">Price Alerts</span>
+              <div class="kpi-icon" style="color: #dc2626;">🚨</div>
+            </div>
+            <div class="kpi-value" id="kpi-alerts-count" style="color: #dc2626;">18</div>
+            <div class="kpi-subtitle">3 High Severity</div>
+          </div>
+        </div>
+
+        <!-- Large Main Airfare Index Trend Chart -->
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Airfare Price Index Trend</h3>
+              <span>Laspeyres Index Time Series (Base Period = 100.0)</span>
+            </div>
+            <div class="time-filter-pills">
+              <button class="time-pill-btn" data-days="7">7 Days</button>
+              <button class="time-pill-btn active" data-days="30">30 Days</button>
+              <button class="time-pill-btn" data-days="60">60 Days</button>
+              <button class="time-pill-btn" data-days="90">90 Days</button>
+            </div>
+          </div>
+          <div class="chart-box" style="height: 320px;">
+            <canvas id="chart-index-trend"></canvas>
+          </div>
+        </div>
+
+        <!-- Grid 1: Top Routes & Price Spike Alerts -->
+        <div class="dashboard-grid-2">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title">
+                <h3>Top Domestic Routes</h3>
+                <span>Click any route to open granular analytics</span>
+              </div>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" data-navigate="view-routes">View All Map</button>
+            </div>
+            <div class="top-routes-grid" id="dashboard-top-routes-grid">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title">
+                <h3>Active Price Alerts</h3>
+                <span>Statistical Surges & Anomalies</span>
+              </div>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" data-navigate="view-spikes">All Alerts</button>
+            </div>
+            <div class="alert-feed" id="dashboard-alerts-preview">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid 2: Booking Window Analysis & Airline Comparison -->
+        <div class="dashboard-grid-equal">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title">
+                <h3>Booking Window Price Escalation (T+N)</h3>
+                <span id="dash-bw-insight-text">T+1 fares average 68% higher than T+30</span>
+              </div>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" data-navigate="view-booking">Deepdive</button>
+            </div>
+            <div class="chart-box" style="height: 260px;">
+              <canvas id="chart-booking-window"></canvas>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title">
+                <h3>Carrier Fare Comparison</h3>
+                <span>Average Fares Across Monitored Airlines</span>
+              </div>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" data-navigate="view-comparison">Compare</button>
+            </div>
+            <div class="top-routes-grid" id="dashboard-airline-comp-container">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. AIRFARE PRICE INDEX DEEPDIVE -->
+    <section id="view-index" class="view-section">
+      <div class="view-container">
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Airfare Price Index & Sectoral Decomposition</h3>
+              <span>Standardized Laspeyres Formulation (Base Period Index = 100.0)</span>
+            </div>
+            <span class="badge badge-green">Base Period Benchmark: ₹6,920</span>
+          </div>
+          <div class="kpi-grid" id="subsectors-grid">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="dashboard-grid-equal">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title"><h3>Index Movement vs Base Period</h3></div>
+            </div>
+            <div class="chart-box"><canvas id="chart-index-deepdive"></canvas></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <div class="dash-card-title"><h3>Weighted Average Fare Progression (₹)</h3></div>
+            </div>
+            <div class="chart-box"><canvas id="chart-fare-breakdown-trend"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ROUTE ANALYTICS -->
+    <section id="view-routes" class="view-section">
+      <div class="view-container">
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>India Domestic Route Network & Airfare Heatmap</h3>
+              <span>Click any flight path or airport hub to inspect detailed economics</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <span class="badge badge-green">Low Fare (&lt;₹4,600)</span>
+              <span class="badge badge-orange">Medium (₹4,600 - ₹6,300)</span>
+              <span class="badge badge-red">High Surge (&gt;₹6,300)</span>
+            </div>
+          </div>
+          <div class="map-canvas-container" style="height: 500px;">
+            <svg id="india-routes-svg-full"></svg>
+          </div>
+        </div>
+
+        <h3 style="margin-bottom: 14px; font-size: 1.05rem; font-weight: 700;">Tracked Domestic Route Corridors</h3>
+        <div class="top-routes-grid" id="route-cards-container">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. AIRLINE COMPARISON -->
+    <section id="view-comparison" class="view-section">
+      <div class="view-container">
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Carrier & Booking Channel Fare Comparison</h3>
+              <span id="comp-route-name">All India Domestic Network</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <label style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Select Route:</label>
+              <select id="comp-route-select" class="filter-select"><option value="ALL">All Domestic Routes</option></select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px 16px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px;">
+            <span>Overall Corridor Average: <strong id="comp-route-avg" style="color: #0284c7; font-family: var(--font-mono); font-size: 1.1rem;">₹7,955</strong></span>
+            <span style="font-size: 0.78rem; color: var(--text-muted);">Comparing IndiGo, Air India, Air India Express, Akasa Air, SpiceJet, Vistara</span>
+          </div>
+
+          <div class="kpi-grid" id="airline-comp-cards"></div>
+
+          <h4 style="font-size: 0.9rem; font-weight: 700; margin: 20px 0 10px 0; text-transform: uppercase; color: var(--text-muted);">Fare Component Decomposition (Base vs Taxes vs Fees)</h4>
+          <div class="chart-box" style="height: 250px;"><canvas id="chart-airline-breakdown"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PRICE SPIKE ALERTS -->
+    <section id="view-spikes" class="view-section">
+      <div class="view-container">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Explainable Statistical Price Spike Detector</h3>
+              <span>Automated Anomaly Scoring (Z &ge; 1.95 or Deviation &ge; +35%)</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <label style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Filter Severity:</label>
+              <select id="alert-severity-filter" class="filter-select">
+                <option value="ALL">All Severities</option>
+                <option value="HIGH">High Severity (>35% surge)</option>
+                <option value="MEDIUM">Medium Severity</option>
+                <option value="LOW">Low Severity</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="alert-feed" id="spike-alerts-feed-full" style="max-height: 620px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. BOOKING WINDOW ANALYSIS -->
+    <section id="view-booking" class="view-section">
+      <div class="view-container">
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Advance Booking Window Price Escalation Analysis</h3>
+              <span>T+1, T+7, T+15, T+30, T+45 Departure Lead-Time Velocity</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <label style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Route Filter:</label>
+              <select id="bw-route-select" class="filter-select"><option value="ALL">All Domestic Routes Combined</option></select>
+            </div>
+          </div>
+
+          <div style="padding: 12px 16px; background: #fef3c7; border: 1px solid #fde68a; border-radius: 8px; margin-bottom: 18px; font-size: 0.84rem; color: #92400e; font-weight: 600;" id="bw-insight-text">
+            T+1 last-minute departure fares average 68% higher than T+30 advance bookings.
+          </div>
+
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Booking Window Tier</th>
+                  <th>Average Total Fare</th>
+                  <th>Average Base Fare</th>
+                  <th>Escalation vs T+45 Baseline</th>
+                  <th>Observations Sampled</th>
+                </tr>
+              </thead>
+              <tbody id="bw-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. DATA EXPLORER -->
+    <section id="view-explorer" class="view-section">
+      <div class="view-container">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Domestic Airfare Raw & Cleaned Data Explorer</h3>
+              <span>11,000+ Verified Multi-Source Observations</span>
+            </div>
+          </div>
+
+          <div class="table-filter-bar">
+            <input type="text" id="explorer-search" class="filter-input" placeholder="Search Observation ID, City, Flight..." style="flex-grow: 1; min-width: 180px;">
+            <select id="explorer-filter-origin" class="filter-select"><option value="ALL">Origin: All</option></select>
+            <select id="explorer-filter-destination" class="filter-select"><option value="ALL">Destination: All</option></select>
+            <select id="explorer-filter-airline" class="filter-select"><option value="ALL">Airline: All</option></select>
+            <select id="explorer-filter-window" class="filter-select">
+              <option value="ALL">Window: All</option>
+              <option value="T+1">T+1</option><option value="T+7">T+7</option><option value="T+15">T+15</option><option value="T+30">T+30</option><option value="T+45">T+45</option>
+            </select>
+          </div>
+
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Observation ID</th><th>Flight Date</th><th>Route</th><th>Airline & Flight</th><th>Window</th>
+                  <th>Base Fare</th><th>GST (5%)</th><th>Fees</th><th>Total Fare</th><th>Source</th><th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="explorer-table-body"></tbody>
+            </table>
+          </div>
+
+          <div class="pagination-bar">
+            <span id="explorer-pag-info">Showing page 1</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-secondary" id="explorer-btn-prev">Previous</button>
+              <button class="btn btn-secondary" id="explorer-btn-next">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. DATA QUALITY -->
+    <section id="view-quality" class="view-section">
+      <div class="view-container">
+        <div class="dash-card" style="margin-bottom: 22px;">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>Ingestion Hygiene, Deduplication & Data Quality Monitor</h3>
+              <span>Automated ETL Pipeline Quality Audit</span>
+            </div>
+            <span class="badge badge-green">98.5% Quality Score</span>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-title">Data Quality Score</div><div class="kpi-value" id="dq-score-val" style="color: #059669;">98.5%</div><div class="kpi-subtitle">Clean Validated Ratio</div></div>
+            <div class="kpi-card"><div class="kpi-title">Records Ingested</div><div class="kpi-value" id="dq-total-records">11,165</div><div class="kpi-subtitle">Total Observations</div></div>
+            <div class="kpi-card"><div class="kpi-title">Valid Records</div><div class="kpi-value" id="dq-valid-records">11,000</div><div class="kpi-subtitle">Passed Schema Validation</div></div>
+            <div class="kpi-card"><div class="kpi-title">Duplicates Rejected</div><div class="kpi-value" id="dq-dup-records" style="color: #b45309;">165</div><div class="kpi-subtitle">Source Redundancies Purged</div></div>
+            <div class="kpi-card"><div class="kpi-title">Missing Values Handled</div><div class="kpi-value" id="dq-missing-records" style="color: #0284c7;">440</div><div class="kpi-subtitle">Fee Imputations & Defaults</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. METHODOLOGY -->
+    <section id="view-methodology" class="view-section">
+      <div class="view-container">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>AeroPulse Mathematical & Analytical Methodology</h3>
+              <span>Real-Time Laspeyres Airfare Price Index Specification</span>
+            </div>
+          </div>
+
+          <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">
+            <h4 style="color: var(--text-primary); font-size: 1.05rem; margin: 16px 0 8px 0;">1. Laspeyres Price Index Formulation</h4>
+            <p>The platform calculates the domestic Airfare Price Index relative to a standardized base period benchmark (₹6,920) using fixed passenger traffic weights:</p>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-left: 4px solid var(--color-primary); padding: 14px 18px; font-family: var(--font-mono); font-size: 0.95rem; color: #0284c7; margin: 10px 0; border-radius: 4px;">
+              Airfare Index = ( &sum; [w_i &times; P_{i,current}] / &sum; [w_i &times; P_{i,base}] ) &times; 100
+            </div>
+            <p>Where $P_{i,	ext{current}}$ is the current weighted fare, $P_{i,	ext{base}}$ is the base benchmark fare (₹6,920), and $w_i$ is the route traffic share.</p>
+
+            <h4 style="color: var(--text-primary); font-size: 1.05rem; margin: 20px 0 8px 0;">2. Numerical Index Example</h4>
+            <p>
+              • Base Period Weighted Average Fare = <strong>₹6,920</strong><br>
+              • Current Weighted Average Fare = <strong>₹7,955</strong><br>
+              • Airfare Price Index = (7,955 / 6,920) &times; 100 = <strong>115.4</strong><br>
+              • Interpretation: Airfares have increased by approximately <strong>15.4%</strong> compared with the base period benchmark.
+            </p>
+
+            <h4 style="color: var(--text-primary); font-size: 1.05rem; margin: 20px 0 8px 0;">3. Explainable Anomaly Detection Algorithm</h4>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); border-left: 4px solid var(--color-danger); padding: 14px 18px; font-family: var(--font-mono); font-size: 0.95rem; color: #dc2626; margin: 10px 0; border-radius: 4px;">
+              Z-Score = ( P_{observed} - &mu;_{route,window} ) / &sigma;_{route,window}
+            </div>
+            <p>Flags price surges when $Z \ge 1.95$ or percentage deviation $\ge +35\%$ with transparent root cause diagnostics.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. ABOUT -->
+    <section id="view-about" class="view-section">
+      <div class="view-container">
+        <div class="dash-card">
+          <div class="dash-card-header">
+            <div class="dash-card-title">
+              <h3>About AeroPulse</h3>
+              <span>Standalone Professional Aviation Data Intelligence Platform</span>
+            </div>
+          </div>
+
+          <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">
+            <h4 style="color: var(--text-primary); font-size: 1.05rem; margin: 16px 0 8px 0;">What is AeroPulse?</h4>
+            <p>AeroPulse is an independent aviation data intelligence platform that automatically collects, cleans, normalizes, and analyzes domestic airfare movements across India. It computes high-frequency price indices and delivers explainable pricing intelligence for aviation analysts, economists, and researchers.</p>
+
+            <h4 style="color: var(--text-primary); font-size: 1.05rem; margin: 20px 0 8px 0;">Who Can Use AeroPulse?</h4>
+            <p>• <strong>Civil Aviation Analysts:</strong> Monitor route volatility and carrier seat yield behavior.<br>
+            • <strong>Economic Researchers:</strong> High-frequency visibility into transportation pricing and travel inflation trends.<br>
+            • <strong>Commercial Airlines:</strong> Competitive market benchmarking across routes, advance windows, and distribution channels.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Route Drilldown Modal -->
+  <div class="modal-backdrop" id="modal-drilldown-backdrop">
+    <div class="modal-box">
+      <button class="modal-close" id="modal-drilldown-close">&times;</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+        <span class="badge badge-blue">Route Analytics</span>
+        <h3 id="modal-route-title" style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">Chennai → Delhi</h3>
+      </div>
+      <div style="display: flex; gap: 20px; margin-bottom: 16px; padding: 10px 14px; background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px;">
+        <div>Average Fare: <strong id="modal-route-avgfare" style="color: #0284c7; font-family: var(--font-mono); font-size: 1.1rem;">₹7,450</strong></div>
+        <div>Airfare Index: <strong id="modal-route-index" style="color: #059669; font-family: var(--font-mono); font-size: 1.1rem;">112.5</strong></div>
+      </div>
+      <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Airline Fare Distribution</h4>
+      <div id="modal-airline-list" style="margin-bottom: 16px;"></div>
+      <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;">Advance Booking Progression (T+45 to T+1)</h4>
+      <div id="modal-window-curve"></div>
+    </div>
+  </div>
+
+  <script src="/static/charts.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
